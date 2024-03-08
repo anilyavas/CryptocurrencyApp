@@ -1,5 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  FlatList,
+  Image,
+} from 'react-native';
 import { useEffect, useState } from 'react';
 
 export default function App() {
@@ -23,33 +30,34 @@ export default function App() {
   return (
     <SafeAreaView>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Cryptocurrencies</Text>
+        <Text style={styles.headerText}>CRYPTO</Text>
       </View>
       <View style={styles.subTitle}>
-        <View style={styles.subContainer}>
-          <Text style={styles.subtitleText}>Name</Text>
-          <FlatList
-            contentContainerStyle={{ gap: 20 }}
-            data={data}
-            renderItem={({ item }) => <Text>{item.name}</Text>}
-          />
-        </View>
-        <View style={styles.subContainer}>
-          <Text style={styles.subtitleText}>Symbol</Text>
-          <FlatList
-            contentContainerStyle={{ gap: 20, alignItems: 'center' }}
-            data={data}
-            renderItem={({ item }) => <Text>{item.symbol}</Text>}
-          />
-        </View>
-        <View style={styles.subContainer}>
-          <Text style={styles.subtitleText}>Price(US$)</Text>
-          <FlatList
-            contentContainerStyle={{ gap: 20 }}
-            data={data}
-            renderItem={({ item }) => <Text>{item.price_usd}</Text>}
-          />
-        </View>
+        <Text style={styles.subtitleText}>Name</Text>
+        <Text style={styles.subtitleText}>Symbol</Text>
+        <Text style={styles.subtitleText}>Price</Text>
+      </View>
+      <View style={styles.dataContainer}>
+        <FlatList
+          contentContainerStyle={{ gap: 10 }}
+          data={data}
+          renderItem={({ item }) => (
+            <View style={styles.container}>
+              <Image
+                style={{ height: 20, width: 20, marginRight: 5 }}
+                source={{
+                  uri: `https://www.coinlore.com/img/${item.nameid}.webp`,
+                }}
+              />
+              <Text style={styles.text}>{item.name}</Text>
+              <Text style={[styles.text, { fontWeight: '400' }]}>
+                {item.symbol}
+              </Text>
+              <View style={{ flex: 1 }} />
+              <Text style={styles.text}>${item.price_usd}</Text>
+            </View>
+          )}
+        />
       </View>
 
       <StatusBar style='auto' />
@@ -76,7 +84,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingBottom: 10,
   },
-  subContainer: {
-    padding: 5,
+  text: {
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  container: {
+    flexDirection: 'row',
+    borderColor: 'gainsboro',
+    borderWidth: 1,
+    padding: 10,
   },
 });
