@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   FlatList,
   Image,
+  ScrollView,
 } from 'react-native';
 import { useEffect, useState } from 'react';
 
@@ -42,20 +43,41 @@ export default function App() {
           contentContainerStyle={{ gap: 10 }}
           data={data}
           renderItem={({ item }) => (
-            <View style={styles.container}>
-              <Image
-                style={{ height: 20, width: 20, marginRight: 5 }}
-                source={{
-                  uri: `https://www.coinlore.com/img/${item.nameid}.webp`,
+            <ScrollView contentContainerStyle={styles.container}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start',
+                  flex: 1,
                 }}
-              />
-              <Text style={styles.text}>{item.name}</Text>
-              <Text style={[styles.text, { fontWeight: '400' }]}>
-                {item.symbol}
-              </Text>
-              <View style={{ flex: 1 }} />
-              <Text style={styles.text}>${item.price_usd}</Text>
-            </View>
+              >
+                <Image
+                  style={{ height: 20, width: 20, marginRight: 5 }}
+                  source={{
+                    uri: `https://www.coinlore.com/img/${item.nameid}.webp`,
+                  }}
+                />
+                <Text style={styles.text}>{item.name}</Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text
+                  style={[
+                    styles.text,
+                    {
+                      fontWeight: '400',
+                      textAlign: 'center',
+                    },
+                  ]}
+                >
+                  {item.symbol}
+                </Text>
+              </View>
+              <View style={{ flex: 1 }}>
+                <Text style={[styles.text, { textAlign: 'right' }]}>
+                  ${item.price_usd}
+                </Text>
+              </View>
+            </ScrollView>
           )}
         />
       </View>
@@ -78,6 +100,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     padding: 20,
+    marginHorizontal: 5,
   },
   subtitleText: {
     color: 'grey',
@@ -93,5 +116,8 @@ const styles = StyleSheet.create({
     borderColor: 'gainsboro',
     borderWidth: 1,
     padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginHorizontal: 5,
   },
 });
