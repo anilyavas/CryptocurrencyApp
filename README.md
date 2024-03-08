@@ -7,7 +7,7 @@ Find the project requirements here: [Cryptocurrency price listing mobile app](ht
 Built with React Native with using JavaScript
 
 ## Screenshots and demo
-![alt text](http://url/to/img.png)
+<img width="442" alt="Screenshot 2024-03-08 at 14 13 34" src="https://github.com/anilyavas/crypto-currency-app/assets/128689358/ce9ec679-441f-452f-a3fe-5e8bbcf99f0b">
 
 
 ## Installation
