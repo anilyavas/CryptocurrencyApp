@@ -1,29 +1,25 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, SafeAreaView, FlatList } from 'react-native';
+import { useEffect, useState } from 'react';
 
-const dummyCurrency = [
-  {
-    name: 'Bitcoin',
-    symbol: 'BTC',
-    price: '$16,735.96',
-  },
-  {
-    name: 'Ethereum',
-    symbol: 'ETH',
-    price: '$506.64',
-  },
-  {
-    name: 'XRP',
-    symbol: 'XRP',
-    price: '$0.521819',
-  },
-  {
-    name: 'Tether',
-    symbol: 'USDT',
-    price: '$1.00',
-  },
-];
 export default function App() {
+  const [data, setData] = useState([]);
+
+  const getCoins = () => {
+    return fetch('https://api.coinlore.net/api/tickers/?limit=100')
+      .then((response) => response.json())
+      .then((json) => {
+        setData(json.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  };
+
+  useEffect(() => {
+    getCoins();
+  }, []);
+
   return (
     <SafeAreaView>
       <View style={styles.header}>
@@ -33,25 +29,25 @@ export default function App() {
         <View style={styles.subContainer}>
           <Text style={styles.subtitleText}>Name</Text>
           <FlatList
-            contentContainerStyle={{ gap: 10 }}
-            data={dummyCurrency}
+            contentContainerStyle={{ gap: 20 }}
+            data={data}
             renderItem={({ item }) => <Text>{item.name}</Text>}
           />
         </View>
         <View style={styles.subContainer}>
           <Text style={styles.subtitleText}>Symbol</Text>
           <FlatList
-            contentContainerStyle={{ gap: 10, alignItems: 'center' }}
-            data={dummyCurrency}
+            contentContainerStyle={{ gap: 20, alignItems: 'center' }}
+            data={data}
             renderItem={({ item }) => <Text>{item.symbol}</Text>}
           />
         </View>
         <View style={styles.subContainer}>
           <Text style={styles.subtitleText}>Price(US$)</Text>
           <FlatList
-            contentContainerStyle={{ gap: 10 }}
-            data={dummyCurrency}
-            renderItem={({ item }) => <Text>{item.price}</Text>}
+            contentContainerStyle={{ gap: 20 }}
+            data={data}
+            renderItem={({ item }) => <Text>{item.price_usd}</Text>}
           />
         </View>
       </View>
@@ -79,5 +75,8 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 16,
     paddingBottom: 10,
+  },
+  subContainer: {
+    padding: 5,
   },
 });
